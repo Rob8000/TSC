@@ -1,3 +1,5 @@
+This is a fork that allowed me to compile this on Manjaro
+
 The Secret Chronicles of Dr. M.
 ===============================
 

@@ -99,7 +99,7 @@
 #ifdef CEGUI_USE_EXPAT
 #include <CEGUI/XMLParserModules/Expat/XMLParserModule.h>
 #else
-#include <CEGUI/XMLParserModules/Libxml2/XMLParserModule.h>
+#include <CEGUI/XMLParserModules/RapidXML/XMLParserModule.h>
 #endif
 
 // SFML

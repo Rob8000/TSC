@@ -111,11 +111,7 @@ find_package(OpenGL REQUIRED)
 find_package(PNG REQUIRED)
 find_package(PCRE REQUIRED)
 
-if (USE_LIBXMLPP3)
-  find_package(LibXmlPP 3.0 REQUIRED)
-else()
-  find_package(LibXmlPP 2.6 REQUIRED)
-endif()
+find_package(LibXmlPP 3.0 REQUIRED)
 
 find_package(Boost 1.50.0 COMPONENTS filesystem chrono thread REQUIRED)
 set(Boost_COMPONENTS Boost::filesystem Boost::chrono Boost::thread)

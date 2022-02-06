@@ -33,7 +33,7 @@
 #include "../core/filesystem/relative.hpp"
 #include "../gui/hud.hpp"
 #include "video.hpp"
-
+#include <CEGUI/XMLParserModules/Expat/XMLParserModule.h>
 using namespace std;
 
 namespace fs = boost::filesystem;
@@ -106,7 +106,7 @@ void cVideo::Init_CEGUI(void)
 #ifdef CEGUI_USE_EXPAT
     mp_cegui_xmlparser = new CEGUI::ExpatParser();
 #else
-    mp_cegui_xmlparser = new CEGUI::LibxmlParser();
+    mp_cegui_xmlparser = new CEGUI::RapidXMLParser();
 #endif
     mp_cegui_imgcodec = new CEGUI::DevILImageCodec();
     CEGUI::System::create(*mp_cegui_renderer, NULL, mp_cegui_xmlparser, mp_cegui_imgcodec, NULL, "", utf8_logpath);

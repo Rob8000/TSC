@@ -115,11 +115,9 @@ void cSave::Write_To_File(fs::path filepath)
     xmlpp::Element* p_node = NULL;
 
     // <information>
-#ifdef USE_LIBXMLPP3
+
     p_node = p_root->add_child_element("information");
-#else
-    p_node = p_root->add_child("information");
-#endif
+
     Add_Property(p_node, "version", m_version);
     Add_Property(p_node, "level_engine_version", m_level_engine_version);
     Add_Property(p_node, "save_time", static_cast<uint64_t>(m_save_time));
@@ -127,11 +125,9 @@ void cSave::Write_To_File(fs::path filepath)
     // </information>
 
     // <player>
-#ifdef USE_LIBXMLPP3
+
     p_node = p_root->add_child_element("player");
-#else
-    p_node = p_root->add_child("player");
-#endif
+
     Add_Property(p_node, "lives", m_lives);
     Add_Property(p_node, "points", m_points);
     Add_Property(p_node, "goldpieces", m_goldpieces);
@@ -156,11 +152,9 @@ void cSave::Write_To_File(fs::path filepath)
     for (return_iter = m_return_entries.begin(); return_iter != m_return_entries.end(); return_iter++) {
         cSave_Player_Return_Entry item = *return_iter;
 
-#ifdef USE_LIBXMLPP3
+
         p_node = p_root->add_child_element("return");
-#else
-        p_node = p_root->add_child("return");
-#endif
+
 
         if (!item.m_level.empty())
             Add_Property(p_node, "level", item.m_level);
@@ -181,13 +175,10 @@ void cSave::Write_To_File(fs::path filepath)
         cSave_Overworld* p_overworld = *oiter;
 
         // <overworld>
-#ifdef USE_LIBXMLPP3
+
         p_node = p_root->add_child_element("overworld");
         Add_Property(p_node, "name", p_overworld->m_name);
-#else
-        p_node = p_root->add_child("overworld");
-        Add_Property(p_node, "name", p_overworld->m_name);
-#endif
+
 
         Save_Overworld_WaypointList::const_iterator wpiter;
         for (wpiter=p_overworld->m_waypoints.begin(); wpiter != p_overworld->m_waypoints.end(); wpiter++) {
@@ -198,11 +189,9 @@ void cSave::Write_To_File(fs::path filepath)
                 continue;
 
             // <waypoint>
-#ifdef USE_LIBXMLPP3
+
             xmlpp::Element* p_waypoint_node = p_node->add_child_element("waypoint");
-#else
-            xmlpp::Element* p_waypoint_node = p_node->add_child("waypoint");
-#endif
+
             Add_Property(p_waypoint_node, "destination", p_wp->m_destination);
             Add_Property(p_waypoint_node, "access", p_wp->m_access);
 

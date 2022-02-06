@@ -81,13 +81,10 @@ cSave_Level::~cSave_Level(void)
 void cSave_Level::Save_To_Node(xmlpp::Element* p_parent_node)
 {
     // <level>
-#ifdef USE_LIBXMLPP3
+
     xmlpp::Element* p_node = p_parent_node->add_child_element("level");
     Add_Property(p_node, "level_name", m_name);
-#else
-    xmlpp::Element* p_node = p_parent_node->add_child("level");
-    Add_Property(p_node, "level_name", m_name);
-#endif
+
 
     // Player position. Only save that for the active level.
     if (!Is_Float_Equal(m_level_pos_x, 0.0f) && !Is_Float_Equal(m_level_pos_y, 0.0f)) {
@@ -98,7 +95,7 @@ void cSave_Level::Save_To_Node(xmlpp::Element* p_parent_node)
     /* Custom data a script writer wants to store; empty if the
      * script writer didn’t hook into the on_load and on_save
      * events. */
-#ifdef USE_LIBXMLPP3
+
     if (!m_script_datas.empty()) {
         xmlpp::Element* p_datas_node = p_node->add_child_element("mruby_data");
         for(const Script_Data& data: m_script_datas) {
@@ -112,29 +109,13 @@ void cSave_Level::Save_To_Node(xmlpp::Element* p_parent_node)
             }
         }
     }
-#else
-    if (!m_script_datas.empty()) {
-        xmlpp::Element* p_datas_node = p_node->add_child("mruby_data");
-        for(const Script_Data& data: m_script_datas) {
-            xmlpp::Element* p_data_node = p_datas_node->add_child("script_data");
 
-            for(auto iter=data.begin(); iter != data.end(); iter++) {
-                xmlpp::Element* p_entry_node = p_data_node->add_child("script_data_entry");
-                p_entry_node->set_attribute("name", iter->first);
-                p_entry_node->set_attribute("type", std::get<0>(iter->second));
-                p_entry_node->set_attribute("value", std::get<1>(iter->second));
-            }
-        }
-    }
-#endif
 
     // The regular objects.
     // <objects_data>
-#ifdef USE_LIBXMLPP3
+
     xmlpp::Element* p_objects_data_node = p_node->add_child_element("objects_data");
-#else
-    xmlpp::Element* p_objects_data_node = p_node->add_child("objects_data");
-#endif
+
     std::vector<const cSprite*>::const_iterator iter;
     for(iter=m_regular_objects.begin(); iter != m_regular_objects.end(); iter++) {
         xmlpp::Document subdoc;
@@ -153,11 +134,9 @@ void cSave_Level::Save_To_Node(xmlpp::Element* p_parent_node)
 
     // The spawned objects. These have always to be saved.
     // <spawned_objects>
-#ifdef USE_LIBXMLPP3
+
     xmlpp::Element* p_spawned_node = p_node->add_child_element("spawned_objects");
-#else
-    xmlpp::Element* p_spawned_node = p_node->add_child("spawned_objects");
-#endif
+
     cSprite_List::iterator iter2; // TODO: Should be const_iterator
     for(iter2=m_spawned_objects.begin(); iter2 != m_spawned_objects.end(); iter2++) {
         cSprite* p_sprite = (*iter2);
